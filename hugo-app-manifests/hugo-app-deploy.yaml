@@ -54,6 +54,6 @@ spec:
               serviceName: hugo-app
               servicePort: 443
             path: /
-  tls:
-    - hosts:
-        - portfolio.192.168.178.37.nip.io
+#   tls:
+#     - hosts:
+#         - portfolio.192.168.178.37.nip.io
