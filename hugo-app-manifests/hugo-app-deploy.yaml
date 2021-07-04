@@ -33,7 +33,7 @@ spec:
   ports:
     - name: http
       port: 80
-      targetPort: https
+      targetPort: http
   selector:
     app: hugo-app
 ---
@@ -52,7 +52,7 @@ spec:
         paths:
           - backend:
               serviceName: hugo-app
-              servicePort: https
+              servicePort: http
             path: /
   tls:
     - hosts:
