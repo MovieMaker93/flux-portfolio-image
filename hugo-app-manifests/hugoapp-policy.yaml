@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   filterTags:
-    pattern: '[a-fA-F0-9]+'
+    pattern: '^main-[a-fA-F0-9]+-(?P<ts>.*)'
     extract: '$ts'  
   imageRepositoryRef:
     name: hugoapp
