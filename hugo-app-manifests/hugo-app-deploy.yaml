@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: hugo-app
-          image: alfonsofortunato/hugo-app:master-79498b30-1625426555 # {"$imagepolicy": "flux-system:hugoapp"}
+          image: alfonsofortunato/hugo-app:master-bf91ee2c-1625427585 # {"$imagepolicy": "flux-system:hugoapp"}
           ports:
             - containerPort: 80
               name: http
@@ -44,15 +44,13 @@ metadata:
   namespace: hugosite
 spec:
   rules:
-  - host: portfolio.192.168.178.37.nip.io
-    http:
-      paths:
-      - backend:
-          serviceName: hugo-app
-          servicePort: http
-        path: /
+    - host: portfolio.192.168.178.37.nip.io
+      http:
+        paths:
+          - backend:
+              serviceName: hugo-app
+              servicePort: http
+            path: /
   tls:
-  - hosts:
-    - portfolio.192.168.178.37.nip.io
-      
-
+    - hosts:
+        - portfolio.192.168.178.37.nip.io
