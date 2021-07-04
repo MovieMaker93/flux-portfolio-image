@@ -2,26 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-   app: hugo-app
+    app: hugo-app
   name: hugo-app
   namespace: hugosite
 spec:
   replicas: 2
   selector:
-   matchLabels:
-    app: hugo-app
+    matchLabels:
+      app: hugo-app
   template:
     metadata:
       labels:
         app: hugo-app
     spec:
       containers:
-      - name: hugo-app
-        image: alfonsofortunato/hugo-app:master-79498b30-1625421778 # {"$imagepolicy": "flux-system:hugoapp"}
-        ports:
-        - containerPort: 80
-          name: http
-
+        - name: hugo-app
+          image: alfonsofortunato/hugo-app:master-79498b30-1625426555 # {"$imagepolicy": "flux-system:hugoapp"}
+          ports:
+            - containerPort: 80
+              name: http
 ---
 apiVersion: v1
 kind: Service
@@ -32,12 +31,11 @@ metadata:
   namespace: hugosite
 spec:
   ports:
-  - name: http
-    port: 80
-    targetPort: http
+    - name: http
+      port: 80
+      targetPort: http
   selector:
     app: hugo-app
-
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -46,14 +44,13 @@ metadata:
   namespace: hugosite
 spec:
   rules:
-  - host: moviemaker.ddns.net
-    http:
-      paths:
-      - backend:
-          serviceName: hugo-app
-          servicePort: http
-        path: /
+    - host: moviemaker.ddns.net
+      http:
+        paths:
+          - backend:
+              serviceName: hugo-app
+              servicePort: http
+            path: /
   tls:
-  - hosts:
-    - moviemaker.ddns.net
-      
+    - hosts:
+        - moviemaker.ddns.net
