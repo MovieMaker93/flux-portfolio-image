@@ -8,7 +8,7 @@ spec:
   git:
     checkout:
       ref:
-        branch: master
+        branch: main
     commit:
       author:
         email: furiafc93@gmail.com
