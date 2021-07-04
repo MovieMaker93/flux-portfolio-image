@@ -9,7 +9,7 @@ spec:
     pattern: '[a-fA-F0-9]+'
     extract: '$ts'  
   imageRepositoryRef:
-    name: hugo-app
+    name: hugoapp
   policy:
     numerical:
       order: asc
