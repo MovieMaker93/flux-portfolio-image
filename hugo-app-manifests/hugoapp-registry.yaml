@@ -6,5 +6,5 @@ metadata:
   namespace: flux-system
 spec:
   image: alfonsofortunato/hugo-app
-  interval: 10m0s
+  interval: 5m0s
 
