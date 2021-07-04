@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         app: hugo-app
-    spec:
+    spec:s
       containers:
         - name: hugo-app
           image: alfonsofortunato/hugo-app:master-ebcb51c6-1625429662 # {"$imagepolicy": "flux-system:hugoapp"}
@@ -31,7 +31,7 @@ metadata:
   namespace: hugosite
 spec:
   ports:
-    - name: http
+    - name: 443
       port: 80
       targetPort: http
   selector:
@@ -52,7 +52,7 @@ spec:
         paths:
           - backend:
               serviceName: hugo-app
-              servicePort: http
+              servicePort: 443
             path: /
   tls:
     - hosts:
