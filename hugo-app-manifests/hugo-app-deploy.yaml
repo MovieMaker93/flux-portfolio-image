@@ -40,9 +40,9 @@ spec:
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  #annotations:
-  #  traefik.ingress.kubernetes.io/router.entrypoints: websecure
-  #  traefik.ingress.kubernetes.io/router.tls: true
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: true
   name: hugo-app
   namespace: hugosite
 spec:
@@ -54,6 +54,7 @@ spec:
               serviceName: hugo-app
               servicePort: 80
             path: /
-#   tls:
+  tls:
+    secret: my-tls-secret
 #     - hosts:
 #         - portfolio.192.168.178.37.nip.io
