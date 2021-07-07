@@ -47,7 +47,7 @@ metadata:
   namespace: hugosite
 spec:
   rules:
-    - host: portfolio.192.168.178.37.nip.io
+    - host: moviemaker.ddns.net
       http:
         paths:
           - backend:
