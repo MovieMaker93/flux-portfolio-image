@@ -55,6 +55,8 @@ spec:
               servicePort: 80
             path: /
   tls:
+  - hosts:
+    - portfolio.192.168.178.37.nip.io
     secret: my-tls-secret
 #     - hosts:
 #         - portfolio.192.168.178.37.nip.io
