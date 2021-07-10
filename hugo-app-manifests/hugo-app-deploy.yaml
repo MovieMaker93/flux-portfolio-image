@@ -49,7 +49,7 @@ metadata:
   namespace: hugosite
 spec:
   rules:
-    - host: moviemaker.ddnsfree.com
+    - host: blogfolio.org
       http:
         paths:
           - backend:
@@ -58,7 +58,7 @@ spec:
             path: /
   tls:
   - hosts:
-    - moviemaker.ddnsfree.com
-    secretName: moviemaker-tls
+    - blogfolio.org
+    secretName: blogfolio-tls
 #     - hosts:
 #         - portfolio.192.168.178.37.nip.io
