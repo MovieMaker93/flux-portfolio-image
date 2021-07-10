@@ -45,6 +45,8 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
     cert-manager.io/cluster-issuer: letsencrypt-prod
     traefik.ingress.kubernetes.io/router.tls: "true"
+    ingress.kubernetes.io/redirect-regex: "^https://(www.blogfolio.org|(blog.)?blogfolio.org)/?(.*)"
+    ingress.kubernetes.io/redirect-replacement: "https://blogfolio.org/$3"
   name: hugo-app
   namespace: hugosite
 spec:
@@ -56,9 +58,23 @@ spec:
               serviceName: hugo-app
               servicePort: 80
             path: /
+    - host: www.blogfolio.org
+      http:
+        paths:
+          - backend:
+              serviceName: hugo-app
+              servicePort: 80
+    - host: blog.blogfolio.org
+      http:
+        paths: 
+          - backend:
+              serviceName: hugo-app
+              servicePort: 80
   tls:
   - hosts:
     - blogfolio.org
+    - www.blogfolio.org
+    - blog.blogfolio.org
     secretName: blogfolio-tls
 #     - hosts:
 #         - portfolio.192.168.178.37.nip.io
