@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: hugo-app
-          image: alfonsofortunato/hugo-app:master-fb8b8ca0-1625682784 # {"$imagepolicy": "flux-system:hugoapp"}
+          image: alfonsofortunato/hugo-app:master-45ff4e9f-1625931299 # {"$imagepolicy": "flux-system:hugoapp"}
           ports:
             - containerPort: 80
               name: http
@@ -66,15 +66,15 @@ spec:
               servicePort: 80
     - host: blog.blogfolio.org
       http:
-        paths: 
+        paths:
           - backend:
               serviceName: hugo-app
               servicePort: 80
   tls:
-  - hosts:
-    - blogfolio.org
-    - www.blogfolio.org
-    - blog.blogfolio.org
-    secretName: blogfolio-tls
+    - hosts:
+        - blogfolio.org
+        - www.blogfolio.org
+        - blog.blogfolio.org
+      secretName: blogfolio-tls
 #     - hosts:
 #         - portfolio.192.168.178.37.nip.io
