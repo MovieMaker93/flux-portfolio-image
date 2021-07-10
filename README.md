@@ -2,7 +2,7 @@
 
 Flux is a opensource project that implements GitOps behaviour.  
 My flux customization is based on the official image update guide that you can find on [flux](https://fluxcd.io/docs/guides/image-update/).  
-My scope is to create a simple CI/CD flow for my blog and portfolio site ([portfolio](https://github.com/MovieMaker93/portfolio-alfonso)).  
+My scope is to create a simple CI/CD flow for my blog and portfolio site ([portfolio](https://github.com/MovieMaker93/hugo-arm-site)).  
 Basically I had the necessity to update my docker image in the deploy manifest everytime tag image version was updated,
 so I created this image update scanning with flux.  
 This is my deploy manifest used for my blog/portfolio site:
