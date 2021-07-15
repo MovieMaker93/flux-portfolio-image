@@ -1,10 +1,9 @@
 # Flux-portfolio-image
 
-Flux is a opensource project that implements GitOps behaviour.  
+Flux is an open-source project that implements GitOps behavior.
 My flux customization is based on the official image update guide that you can find on [flux](https://fluxcd.io/docs/guides/image-update/).  
 My scope is to create a simple CI/CD flow for my blog and portfolio site ([portfolio](https://github.com/MovieMaker93/hugo-arm-site)).  
-Basically I had the necessity to update my docker image in the deploy manifest everytime tag image version was updated,
-so I created this image update scanning with flux.  
+I needed to update my docker image in the deploy manifest every time the tag image version was updated, so I created this image update scanning with flux.  
 This is my deploy manifest used for my blog/portfolio site:
 ```yaml
 apiVersion: apps/v1
@@ -116,6 +115,6 @@ spec:
     numerical:
       order: asc
 ```
-The above policy check the timestap associated with the tag image version, if the timestap version in the dockerhub repository is greater then the image tag used in the deploy manifest, flux will push the new tag image to deploy manifest.
+The above policy checks the timestamp associated with the tag image version, if the timestamp version in the Dockerhub repository is greater than the image tag used in the deploy manifest, Flux will push the new tag image to deploy manifest.
 
 
