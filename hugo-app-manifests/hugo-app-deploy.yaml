@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: hugo-app
-          image: alfonsofortunato/hugo-app:master-ce8728cf-1628529383 # {"$imagepolicy": "flux-system:hugoapp"}
+          image: alfonsofortunato/hugo-app:master-1def7e48-1631410690 # {"$imagepolicy": "flux-system:hugoapp"}
           ports:
             - containerPort: 80
               name: http
