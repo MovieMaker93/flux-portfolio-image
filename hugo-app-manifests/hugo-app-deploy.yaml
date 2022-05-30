@@ -75,6 +75,6 @@ spec:
         - blogfolio.org
         - www.blogfolio.org
         - blog.blogfolio.org
-      secretName: blogfolio-tls
+      secretName: blogfolio-certs
 #     - hosts:
 #         - portfolio.192.168.178.37.nip.io
