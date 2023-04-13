@@ -1,7 +1,7 @@
 # Flux-portfolio-image
 
 Flux is an open-source project that provides GitOps for both apps and infrastructure.  
-The image update feature, provided by Flux CD, automatically updates and reconciles the new version of the app (more info [here](https://fluxcd.io/docs/guides/image-update/).
+The image update feature, provided by Flux CD, automatically updates and reconciles the new version of the app (more info [here](https://fluxcd.io/docs/guides/image-update/)).  
 This custom implementation provides a straightforward way to simplify a classic CD process when the container registry receives the latest tag image (CI process [here](https://github.com/MovieMaker93/hugo-arm-site)).
 
 ## Prerequisites:
