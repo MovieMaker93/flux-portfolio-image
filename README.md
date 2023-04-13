@@ -75,3 +75,37 @@ spec:
             - containerPort: 80
               name: http
   ```
+In the end, you have to create an **ImageUpdateAutomation** to tell Flux which Git repository to write image updates to:
+
+```yaml
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: flux-system
+  namespace: flux-system
+spec:
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: furiafc93@gmail.com
+        name: moviemaker
+      messageTemplate: '{{range .Updated.Images}}{{println .}}{{end}}'
+    push:
+      branch: main
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  update:
+    path: ./hugo-app-manifests
+    strategy: Setters
+ ```  
+ 
+## Final Consideration
+
+The above example is one of the multitudes of use cases you can think about this feature.  
+For example, you can combine this feature with a CD process with Helm Chart or Kustomitazion.  
+So, the image update lets me easily update my blog content with a straightforward process that gives you all the benefits of GitOps in minutes. 
