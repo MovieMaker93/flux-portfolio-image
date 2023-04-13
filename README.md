@@ -1,10 +1,55 @@
 # Flux-portfolio-image
 
-Flux is an open-source project that implements GitOps behavior.
-My flux customization is based on the official image update guide that you can find on [flux](https://fluxcd.io/docs/guides/image-update/).  
-My scope is to create a simple CI/CD flow for my blog and portfolio site ([portfolio](https://github.com/MovieMaker93/hugo-arm-site)).  
-I needed to update my docker image in the deploy manifest every time the tag image version was updated, so I created this image update scanning with flux.  
-This is my deploy manifest used for my blog/portfolio site:
+Flux is an open-source project that provides GitOps for both apps and infrastructure.  
+The image update feature, provided by Flux CD, automatically updates and reconciles the new version of the app (more info [here](https://fluxcd.io/docs/guides/image-update/).
+This custom implementation provides a straightforward way to simplify a classic CD process when the container registry receives the latest tag image (CI process [here](https://github.com/MovieMaker93/hugo-arm-site)).
+
+## Prerequisites:
+1) Kubernetes cluster version 1.16 or newer
+2) Kubectl version 1.18 or above
+3) FluxCd installed with image-reflector-controller,image-automation-controller
+
+## Implementation
+
+This custom workflow automatically updates the image tag in the deploy manifest ( simple Hugo app ).
+The core concepts about the flux image update are:
+1) Define an image repository
+2) Define an image policy
+
+The **image repository** tells Flux which container to scan and the time interval:  
+```yaml
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: hugoapp
+  namespace: flux-system
+spec:
+  image: alfonsofortunato/hugo-app
+  interval: 5m0s
+```
+The ** image policy ** tells Flux which policy to use when filtering tags  
+```yaml
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: hugoapp
+  namespace: flux-system
+spec:
+  filterTags:
+    pattern: '^master-[a-fA-F0-9]+-(?P<ts>.*)'
+    extract: '$ts'  
+  imageRepositoryRef:
+    name: hugoapp
+  policy:
+    numerical:
+      order: asc
+```
+The above policy checks the timestamp associated with the tag image version; if the timestamp version in the Dockerhub repository is greater than the image tag used in the deploy manifest, Flux will push the new tag image to the deploy manifest.
+
+The next step is to instruct Flux which image to update and where, so in the deploy manifest,I've defined this label "{"$imagepolicy": "flux-system:hugoapp"}":  
+deploy.yaml
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -29,92 +74,4 @@ spec:
           ports:
             - containerPort: 80
               name: http
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: hugo-app
-  name: hugo-app
-  namespace: hugosite
-spec:
-  ports:
-    - name: hugo-app
-      port: 80
-      targetPort: http
-  selector:
-    app: hugo-app
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  annotations:
-    ingress.kubernetes.io/ssl-redirect: "true"
-    kubernetes.io/ingress.class: "traefik"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    traefik.ingress.kubernetes.io/router.tls: "true"
-    ingress.kubernetes.io/redirect-regex: "^https://(www.blogfolio.org|(blog.)?blogfolio.org)/?(.*)"
-    ingress.kubernetes.io/redirect-replacement: "https://blogfolio.org/$3"
-  name: hugo-app
-  namespace: hugosite
-spec:
-  rules:
-    - host: blogfolio.org
-      http:
-        paths:
-          - backend:
-              serviceName: hugo-app
-              servicePort: 80
-            path: /
-    - host: www.blogfolio.org
-      http:
-        paths:
-          - backend:
-              serviceName: hugo-app
-              servicePort: 80
-    - host: blog.blogfolio.org
-      http:
-        paths:
-          - backend:
-              serviceName: hugo-app
-              servicePort: 80
-  tls:
-    - hosts:
-        - blogfolio.org
-        - www.blogfolio.org
-        - blog.blogfolio.org
-      secretName: blogfolio-tls
   ```
-I have defined an `ImageRepository` to tell Flux which dockerhub repository to use and the scanning interval:
-```yaml
----
-apiVersion: image.toolkit.fluxcd.io/v1beta1
-kind: ImageRepository
-metadata:
-  name: hugoapp
-  namespace: flux-system
-spec:
-  image: alfonsofortunato/hugo-app
-  interval: 5m0s
-```
-I have also created an `ImagePolicy` to tell Flux which policy to use when filtering tags:
-```yaml
----
-apiVersion: image.toolkit.fluxcd.io/v1beta1
-kind: ImagePolicy
-metadata:
-  name: hugoapp
-  namespace: flux-system
-spec:
-  filterTags:
-    pattern: '^master-[a-fA-F0-9]+-(?P<ts>.*)'
-    extract: '$ts'  
-  imageRepositoryRef:
-    name: hugoapp
-  policy:
-    numerical:
-      order: asc
-```
-The above policy checks the timestamp associated with the tag image version, if the timestamp version in the Dockerhub repository is greater than the image tag used in the deploy manifest, Flux will push the new tag image to deploy manifest.
-
-
