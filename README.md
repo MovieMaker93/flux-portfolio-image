@@ -16,7 +16,7 @@ The core concepts about the flux image update are:
 1) Define an image repository
 2) Define an image policy
 
-The **image repository** tells Flux which container to scan and the time interval:  
+The **image repository** tells Flux which container registry to scan and the time interval:  
 ```yaml
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
