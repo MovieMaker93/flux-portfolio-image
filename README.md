@@ -28,7 +28,7 @@ spec:
   image: alfonsofortunato/hugo-app
   interval: 5m0s
 ```
-The ** image policy ** tells Flux which policy to use when filtering tags  
+The **image policy** tells Flux which policy to use when filtering tags  
 ```yaml
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
