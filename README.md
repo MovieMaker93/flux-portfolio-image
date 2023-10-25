@@ -108,4 +108,4 @@ spec:
 
 The above example is one of the multitudes of use cases you can think about this feature.  
 For example, you can combine this feature with a CD process with Helm Chart or Kustomitazion.  
-So, the image update lets me easily update my blog content with a straightforward process that gives you all the benefits of GitOps in minutes. 
+Therefore, the image update lets me easily update my blog content with a straightforward process that gives you all the benefits of GitOps in minutes. 
